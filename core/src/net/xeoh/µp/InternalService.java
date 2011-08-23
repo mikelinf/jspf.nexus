@@ -29,14 +29,17 @@ package net.xeoh.µp;
 
 
 /**
- * @author Ralf Biedert
- * @param <T>
- * @since 1.0
+ * Reflects an already running and instantiated service object. 
  * 
+ * @author Ralf Biedert
+ * @param <T> The type of the service.
+ * @since 1.0
  */
 public class InternalService<T> extends AbstractService<T> {
     /**
-     * @param object
+     * Instantiates an InternalService object.
+     * 
+     * @param object The actual object you want to register as a service.
      */
     public InternalService(T object) {
         super(object);

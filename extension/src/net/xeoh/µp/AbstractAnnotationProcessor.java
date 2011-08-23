@@ -28,10 +28,12 @@
 package net.xeoh.µp;
 
 /**
+ * Abstract base class of processors that deal with annotations.
+ * 
  * @author Ralf Biedert
  * @since 1.0
  */
-public class AnnotationProcessor extends AbstractProcessor {
+public abstract class AbstractAnnotationProcessor extends AbstractProcessor {
 
     /*
      * (non-Javadoc)

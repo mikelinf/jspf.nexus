@@ -33,7 +33,7 @@ import net.xeoh.µp.options.GetAll;
 
 /**
  * A kernel manages various services and provides implementations for
- * interfaces.
+ * interfaces. 
  * 
  * @author Ralf Biedert
  * @since 1.0
@@ -45,30 +45,43 @@ public interface Kernel {
     }
 
     /**
+     * Registers the collection of {@link Service} objects to this kernel. When this method 
+     * returns they can be aquired with the <code>get()</code> method.
+     *  
      * @since 1.0
-     * @param service
-     * @return
+     * @param service The services to register.
+     * @return This kernel again.
      */
     public Kernel register(Collection<? extends Service> service);
 
     /**
+     * Deregisters {@link Service} objects from this kernel. When the method returns,
+     * the services are not available anymore. 
+     * 
      * @since 1.0
-     * @param service
-     * @return
+     * @param service The services to deregister.
+     * @return This kernel again.
      */
     public Kernel deregister(Collection<? extends Service> service);
 
     /**
+     * Returns an implementor for a given class. If you pass an interface the next best
+     * service matching the class will be returned. If you pass an ordinary class, the next 
+     * best instance of this class is being returned.
+     * 
      * @since 1.0
-     * @param service
-     * @param options
-     * @return
+     * @param service The service to get.
+     * @param options A number of optional arguments to specify what exactly you want.
+     * @return The requested object or null if nothing suitable was found.
      */
     public <T> T get(Class<T> service, Get... options);
 
+    
     /**
+     * Lists all known services.  
+     * 
      * @since 1.0
-     * @return
+     * @return Returns a collection with all known services.
      */
     public Collection<Service> list();
 }

@@ -1,5 +1,5 @@
 /*
- * AbstractService.java
+ * Abstract2StageLocator.java
  * 
  * Copyright (c) 2011, Ralf Biedert, DFKI. All rights reserved.
  * 
@@ -27,33 +27,31 @@
  */
 package net.xeoh.µp;
 
+import java.util.Collection;
+
 /**
- * The abstract implementation for the {@link Service} interface.
+ * A 2StageLocator is a locator that in a first stage is able to list the 
+ * plugin {@link Candidate} objects it would locate as an actual {@link Service}.
  * 
  * @author Ralf Biedert
- * @param <T> The type of the service. 
  * @since 1.0
- * @see InternalService
  */
-public abstract class AbstractService<T> implements Service {
-    /** The actual service object */
-    protected T object;
-
+public abstract class Abstract2StageLocator extends AbstractLocator {
     /**
-     * Constructs an abstract service object with the given service.
+     * Returns a list of {@link Candidate} objects this locator would 
+     * locate as {@link Service} objects.  
      * 
-     * @param object The object that provides service.
+     * @since 1.0
+     * @return A list of candidates.
      */
-    public AbstractService(T object) {
-        this.object = object;
-    }
-
-    /*
-     * (non-Javadoc)
+    public abstract Collection<Candidate> candidates();
+    
+    /**
+     * Only locates the given candidates.
      * 
-     * @see net.jcores.kernel.Service#getService()
+     * @since 1.0
+     * @param candidates The candidates to locate.
+     * @return A list of located {@link Service} objects.
      */
-    public T getService() {
-        return this.object;
-    }
+    public abstract Collection<Service> locate(Collection<Candidate> candidates);
 }

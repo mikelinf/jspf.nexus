@@ -28,9 +28,19 @@
 package net.xeoh.µp;
 
 /**
+ * A class implementing Processor indicates that it can <i>process</i> services in 
+ * some way. 
+ * 
  * @author Ralf Biedert
  * @since 1.0
  */
 public interface Processor {
+    /**
+     * Processes a given service in some way.  
+     * 
+     * @since 1.0
+     * @param service The service to process.
+     * @return A link to this object.
+     */
     public Processor process(Service service);
 }

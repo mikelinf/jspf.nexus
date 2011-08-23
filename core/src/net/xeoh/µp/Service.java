@@ -29,9 +29,18 @@ package net.xeoh.µp;
 
 
 /**
+ * An object implementing the service interface provides a service object 
+ * which can then be used by a {@link Kernel} to resolve request.   
+ * 
  * @author Ralf Biedert
  * @since 1.0
  */
 public interface Service {
+    /**
+     * Returns the service this object provides. 
+     * 
+     * @since 1.0
+     * @return The service object.
+     */
     public Object getService();
 }

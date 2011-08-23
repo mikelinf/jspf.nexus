@@ -1,5 +1,5 @@
 /*
- * AbstractLocator.java
+ * Candidate.java
  * 
  * Copyright (c) 2011, Ralf Biedert, DFKI. All rights reserved.
  * 
@@ -27,12 +27,18 @@
  */
 package net.xeoh.µp;
 
-import java.util.Collection;
-
 /**
+ * A plugin candidate which can be located by a locator.
+ * 
  * @author Ralf Biedert
  * @since 1.0
  */
-public abstract class AbstractLocator implements Locator {
-    public abstract Collection<Service> locate();
+public interface Candidate {
+    /**
+     * Returns the locator that can locate this candidate. 
+     * 
+     * @since 1.0
+     * @return The {@link Abstract2StageLocator} locator that can locate this candidate.
+     */
+    public Abstract2StageLocator getLocator();
 }

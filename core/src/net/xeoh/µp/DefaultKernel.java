@@ -35,9 +35,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
+ * A default implementation of the {@link Kernel} interface. Unless you have specific needs,
+ * use this class.
+ * 
  * @author Ralf Biedert
  * @since 1.0
- * 
  */
 public class DefaultKernel implements Kernel {
     /** All services we know */
@@ -135,6 +137,8 @@ public class DefaultKernel implements Kernel {
             }
         }
 
+        
+        // If there was nothing, return null.
         return null;
     }
 

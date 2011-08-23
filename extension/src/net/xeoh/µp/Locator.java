@@ -1,5 +1,5 @@
 /*
- * AbstractService.java
+ * Locator.java
  * 
  * Copyright (c) 2011, Ralf Biedert, DFKI. All rights reserved.
  * 
@@ -27,33 +27,20 @@
  */
 package net.xeoh.µp;
 
+import java.util.Collection;
+
 /**
- * The abstract implementation for the {@link Service} interface.
+ * A locator can locate a list of {@link Service} objects.
  * 
  * @author Ralf Biedert
- * @param <T> The type of the service. 
  * @since 1.0
- * @see InternalService
  */
-public abstract class AbstractService<T> implements Service {
-    /** The actual service object */
-    protected T object;
-
+public interface Locator {
     /**
-     * Constructs an abstract service object with the given service.
+     * Locates all service objects this locator can reach.
      * 
-     * @param object The object that provides service.
+     * @since 1.0
+     * @return A list of services.
      */
-    public AbstractService(T object) {
-        this.object = object;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see net.jcores.kernel.Service#getService()
-     */
-    public T getService() {
-        return this.object;
-    }
+    public Collection<Service> locate();
 }

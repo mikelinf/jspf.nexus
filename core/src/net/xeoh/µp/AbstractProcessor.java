@@ -28,9 +28,10 @@
 package net.xeoh.µp;
 
 /**
+ * Abstract implementation of the {@link Processor} interface. 
+ * 
  * @author Ralf Biedert
  * @since 1.0
- * 
  */
 public abstract class AbstractProcessor implements Processor {
     /*
