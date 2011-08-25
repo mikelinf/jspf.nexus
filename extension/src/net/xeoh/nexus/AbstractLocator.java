@@ -1,5 +1,5 @@
 /*
- * Locator.java
+ * AbstractLocator.java
  * 
  * Copyright (c) 2011, Ralf Biedert, DFKI. All rights reserved.
  * 
@@ -25,24 +25,21 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-package net.xeoh.µp;
+package net.xeoh.nexus;
 
 import java.util.Collection;
 
 import net.xeoh.nexus.Service;
 
 /**
- * A locator can locate a list of {@link Service} objects.
+ * Abstract base class of a locator.
  * 
  * @author Ralf Biedert
  * @since 1.0
  */
-public interface Locator {
-    /**
-     * Locates all service objects this locator can reach.
-     * 
-     * @since 1.0
-     * @return A list of services.
+public abstract class AbstractLocator implements Locator {
+    /* (non-Javadoc)
+     * @see net.xeoh.µp.Locator#locate()
      */
-    public Collection<Service> locate();
+    public abstract Collection<Service> locate();
 }

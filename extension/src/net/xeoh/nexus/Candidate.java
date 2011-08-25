@@ -25,7 +25,7 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-package net.xeoh.µp;
+package net.xeoh.nexus;
 
 /**
  * A plugin candidate which can be located by a locator.

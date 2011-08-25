@@ -1,5 +1,5 @@
 /*
- * Abstract2StageLocator.java
+ * SingletonService.java
  * 
  * Copyright (c) 2011, Ralf Biedert, DFKI. All rights reserved.
  * 
@@ -25,35 +25,13 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-package net.xeoh.µp;
-
-import java.util.Collection;
-
-import net.xeoh.nexus.Service;
+package net.xeoh.nexus.annotations;
 
 /**
- * A 2StageLocator is a locator that in a first stage is able to list the 
- * plugin {@link Candidate} objects it would locate as an actual {@link Service}.
- * 
  * @author Ralf Biedert
  * @since 1.0
+ *
  */
-public abstract class Abstract2StageLocator extends AbstractLocator {
-    /**
-     * Returns a list of {@link Candidate} objects this locator would 
-     * locate as {@link Service} objects.  
-     * 
-     * @since 1.0
-     * @return A list of candidates.
-     */
-    public abstract Collection<Candidate> candidates();
-    
-    /**
-     * Only locates the given candidates.
-     * 
-     * @since 1.0
-     * @param candidates The candidates to locate.
-     * @return A list of located {@link Service} objects.
-     */
-    public abstract Collection<Service> locate(Collection<Candidate> candidates);
+public @interface SingletonService {
+
 }

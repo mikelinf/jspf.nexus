@@ -1,5 +1,5 @@
 /*
- * AnnotationProcessor.java
+ * Abstract2StageLocator.java
  * 
  * Copyright (c) 2011, Ralf Biedert, DFKI. All rights reserved.
  * 
@@ -25,70 +25,35 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-package net.xeoh.µp;
+package net.xeoh.nexus;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.LinkedList;
 
-import net.xeoh.nexus.AbstractProcessor;
-import net.xeoh.nexus.Processor;
 import net.xeoh.nexus.Service;
 
 /**
- * Abstract base class of processors that deal with annotations.
+ * A 2StageLocator is a locator that in a first stage is able to list the 
+ * plugin {@link Candidate} objects it would locate as an actual {@link Service}.
  * 
  * @author Ralf Biedert
  * @since 1.0
  */
-public abstract class AbstractAnnotationProcessor extends AbstractProcessor {
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see net.jcores.kernel.AbstractProcessor#process(net.jcores.kernel.Service)
-     */
-    @Override
-    public Processor process(Service service) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-    
-    
-    
+public abstract class Abstract2StageLocator extends AbstractLocator {
     /**
-     * Returns all methods defined by this class and makes sure they are accessible.
-     * 
-     * @param clazz The class to consider. 
-     * @since 1.0
-     * @return A list of all methods we care fore.
-     */
-    public static Collection<Method> allMethods(Class<?> clazz) {
-        final Method[] methods = clazz.getMethods();
-        for (Method method : methods) {
-            method.setAccessible(true);
-        }
-        return Arrays.asList(methods);
-    }
-    
-    /**
-     * Returns all methods that are tagged with a given annotation.
+     * Returns a list of {@link Candidate} objects this locator would 
+     * locate as {@link Service} objects.  
      * 
      * @since 1.0
-     * @param methods The methods to scan. 
-     * @param annotation The annotation to search for. 
-     * @return A collection of methods that implement the given annotation.
+     * @return A list of candidates.
      */
-    public static Collection<Method> findMethodsFor(Collection<Method> methods, Annotation annotation) {
-        final Collection<Method> rval = new LinkedList<Method>();
-
-        for (Method method : rval) {
-            //method.getA
-        }
-        
-        
-        return rval;
-    }
+    public abstract Collection<Candidate> candidates();
+    
+    /**
+     * Only locates the given candidates.
+     * 
+     * @since 1.0
+     * @param candidates The candidates to locate.
+     * @return A list of located {@link Service} objects.
+     */
+    public abstract Collection<Service> locate(Collection<Candidate> candidates);
 }

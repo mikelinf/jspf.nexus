@@ -1,5 +1,5 @@
 /*
- * SingletonService.java
+ * InjectService.java
  * 
  * Copyright (c) 2011, Ralf Biedert, DFKI. All rights reserved.
  * 
@@ -25,13 +25,13 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-package net.xeoh.µp.annotations;
+package net.xeoh.nexus.annotations;
 
 /**
  * @author Ralf Biedert
  * @since 1.0
  *
  */
-public @interface SingletonService {
+public @interface InjectService {
 
 }
