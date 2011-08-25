@@ -1,5 +1,5 @@
 /*
- * InternalService.java
+ * DefaultNexusTest.java
  * 
  * Copyright (c) 2011, Ralf Biedert, DFKI. All rights reserved.
  * 
@@ -25,23 +25,21 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-package net.xeoh.µp;
+package net.xeoh.nexus;
 
+import static org.junit.Assert.fail;
+
+import org.junit.Test;
 
 /**
- * Reflects an already running and instantiated service object. 
+ * Test Case.
  * 
  * @author Ralf Biedert
- * @param <T> The type of the service.
  * @since 1.0
  */
-public class InternalService<T> extends AbstractService<T> {
-    /**
-     * Instantiates an InternalService object.
-     * 
-     * @param object The actual object you want to register as a service.
-     */
-    public InternalService(T object) {
-        super(object);
+public class DefaultNexusTest {
+    @Test
+    public void test() {
+        fail("Not yet implemented");
     }
 }

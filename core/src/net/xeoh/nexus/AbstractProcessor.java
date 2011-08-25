@@ -1,5 +1,5 @@
 /*
- * Service.java
+ * AbstractProcessor.java
  * 
  * Copyright (c) 2011, Ralf Biedert, DFKI. All rights reserved.
  * 
@@ -25,22 +25,20 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-package net.xeoh.µp;
-
+package net.xeoh.nexus;
 
 /**
- * An object implementing the service interface provides a service object 
- * which can then be used by a {@link Kernel} to resolve request.   
+ * Abstract implementation of the {@link Processor} interface. 
  * 
  * @author Ralf Biedert
  * @since 1.0
  */
-public interface Service {
-    /**
-     * Returns the service this object provides. 
+public abstract class AbstractProcessor implements Processor {
+    /*
+     * (non-Javadoc)
      * 
-     * @since 1.0
-     * @return The service object.
+     * @see net.jcores.kernel.Processor#process(net.jcores.kernel.Service)
      */
-    public Object getService();
+    @Override
+    public abstract Processor process(Service service);
 }

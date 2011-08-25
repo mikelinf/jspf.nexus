@@ -1,5 +1,5 @@
 /*
- * GetAll.java
+ * AbstractService.java
  * 
  * Copyright (c) 2011, Ralf Biedert, DFKI. All rights reserved.
  * 
@@ -25,15 +25,35 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-package net.xeoh.µp.options;
-
-import net.xeoh.µp.Kernel.Get;
+package net.xeoh.nexus;
 
 /**
+ * The abstract implementation for the {@link Service} interface.
+ * 
  * @author Ralf Biedert
+ * @param <T> The type of the service. 
  * @since 1.0
- *
+ * @see InternalService
  */
-public class GetAll extends Get {
+public abstract class AbstractService<T> implements Service {
+    /** The actual service object */
+    protected T object;
 
+    /**
+     * Constructs an abstract service object with the given service.
+     * 
+     * @param object The object that provides service.
+     */
+    public AbstractService(T object) {
+        this.object = object;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see net.jcores.kernel.Service#getService()
+     */
+    public T getService() {
+        return this.object;
+    }
 }

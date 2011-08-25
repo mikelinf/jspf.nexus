@@ -1,5 +1,5 @@
 /*
- * AbstractProcessor.java
+ * InternalService.java
  * 
  * Copyright (c) 2011, Ralf Biedert, DFKI. All rights reserved.
  * 
@@ -25,20 +25,23 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-package net.xeoh.µp;
+package net.xeoh.nexus;
+
 
 /**
- * Abstract implementation of the {@link Processor} interface. 
+ * Reflects an already running and instantiated service object. 
  * 
  * @author Ralf Biedert
+ * @param <T> The type of the service.
  * @since 1.0
  */
-public abstract class AbstractProcessor implements Processor {
-    /*
-     * (non-Javadoc)
+public class InternalService<T> extends AbstractService<T> {
+    /**
+     * Instantiates an InternalService object.
      * 
-     * @see net.jcores.kernel.Processor#process(net.jcores.kernel.Service)
+     * @param object The actual object you want to register as a service.
      */
-    @Override
-    public abstract Processor process(Service service);
+    public InternalService(T object) {
+        super(object);
+    }
 }

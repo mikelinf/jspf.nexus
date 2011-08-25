@@ -29,6 +29,8 @@ package net.xeoh.µp;
 
 import java.util.Collection;
 
+import net.xeoh.nexus.Service;
+
 /**
  * A locator can locate a list of {@link Service} objects.
  * 

@@ -3,4 +3,4 @@
  *
  * @since 1.0
  */
-package net.xeoh.µp;
+package net.xeoh.nexus;

@@ -25,44 +25,44 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-package net.xeoh.µp;
+package net.xeoh.nexus;
 
 import java.util.Collection;
 
-import net.xeoh.µp.options.GetAll;
+import net.xeoh.nexus.options.GetAll;
 
 /**
- * A kernel manages various services and provides implementations for
+ * A Nexus manages various services and provides implementations for
  * interfaces. 
  * 
  * @author Ralf Biedert
  * @since 1.0
  */
-public interface Kernel {
+public interface Nexus {
     /** Options for get() */
     public static abstract class Get {
         public static final GetAll ALL = new GetAll();
     }
 
     /**
-     * Registers the collection of {@link Service} objects to this kernel. When this method 
+     * Registers the collection of {@link Service} objects to this nexus. When this method 
      * returns they can be aquired with the <code>get()</code> method.
      *  
      * @since 1.0
      * @param service The services to register.
-     * @return This kernel again.
+     * @return This nexus again.
      */
-    public Kernel register(Collection<? extends Service> service);
+    public Nexus register(Collection<? extends Service> service);
 
     /**
-     * Deregisters {@link Service} objects from this kernel. When the method returns,
+     * Deregisters {@link Service} objects from this nexus. When the method returns,
      * the services are not available anymore. 
      * 
      * @since 1.0
      * @param service The services to deregister.
-     * @return This kernel again.
+     * @return This nexus again.
      */
-    public Kernel deregister(Collection<? extends Service> service);
+    public Nexus deregister(Collection<? extends Service> service);
 
     /**
      * Returns an implementor for a given class. If you pass an interface the next best

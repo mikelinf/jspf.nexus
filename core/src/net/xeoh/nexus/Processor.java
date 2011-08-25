@@ -1,5 +1,5 @@
 /*
- * AbstractLocator.java
+ * Processor.java
  * 
  * Copyright (c) 2011, Ralf Biedert, DFKI. All rights reserved.
  * 
@@ -25,21 +25,22 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-package net.xeoh.µp;
-
-import java.util.Collection;
-
-import net.xeoh.nexus.Service;
+package net.xeoh.nexus;
 
 /**
- * Abstract base class of a locator.
+ * A class implementing Processor indicates that it can <i>process</i> services in 
+ * some way. 
  * 
  * @author Ralf Biedert
  * @since 1.0
  */
-public abstract class AbstractLocator implements Locator {
-    /* (non-Javadoc)
-     * @see net.xeoh.µp.Locator#locate()
+public interface Processor {
+    /**
+     * Processes a given service in some way.  
+     * 
+     * @since 1.0
+     * @param service The service to process.
+     * @return A link to this object.
      */
-    public abstract Collection<Service> locate();
+    public Processor process(Service service);
 }

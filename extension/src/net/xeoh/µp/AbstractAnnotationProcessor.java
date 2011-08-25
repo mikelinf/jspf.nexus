@@ -27,6 +27,16 @@
  */
 package net.xeoh.µp;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedList;
+
+import net.xeoh.nexus.AbstractProcessor;
+import net.xeoh.nexus.Processor;
+import net.xeoh.nexus.Service;
+
 /**
  * Abstract base class of processors that deal with annotations.
  * 
@@ -44,5 +54,41 @@ public abstract class AbstractAnnotationProcessor extends AbstractProcessor {
     public Processor process(Service service) {
         // TODO Auto-generated method stub
         return null;
+    }
+    
+    
+    
+    /**
+     * Returns all methods defined by this class and makes sure they are accessible.
+     * 
+     * @param clazz The class to consider. 
+     * @since 1.0
+     * @return A list of all methods we care fore.
+     */
+    public static Collection<Method> allMethods(Class<?> clazz) {
+        final Method[] methods = clazz.getMethods();
+        for (Method method : methods) {
+            method.setAccessible(true);
+        }
+        return Arrays.asList(methods);
+    }
+    
+    /**
+     * Returns all methods that are tagged with a given annotation.
+     * 
+     * @since 1.0
+     * @param methods The methods to scan. 
+     * @param annotation The annotation to search for. 
+     * @return A collection of methods that implement the given annotation.
+     */
+    public static Collection<Method> findMethodsFor(Collection<Method> methods, Annotation annotation) {
+        final Collection<Method> rval = new LinkedList<Method>();
+
+        for (Method method : rval) {
+            //method.getA
+        }
+        
+        
+        return rval;
     }
 }

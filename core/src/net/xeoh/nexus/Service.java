@@ -1,5 +1,5 @@
 /*
- * Processor.java
+ * Service.java
  * 
  * Copyright (c) 2011, Ralf Biedert, DFKI. All rights reserved.
  * 
@@ -25,22 +25,22 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-package net.xeoh.µp;
+package net.xeoh.nexus;
+
 
 /**
- * A class implementing Processor indicates that it can <i>process</i> services in 
- * some way. 
+ * An object implementing the service interface provides a service object 
+ * which can then be used by a {@link Nexus} to resolve request.   
  * 
  * @author Ralf Biedert
  * @since 1.0
  */
-public interface Processor {
+public interface Service {
     /**
-     * Processes a given service in some way.  
+     * Returns the service this object provides. 
      * 
      * @since 1.0
-     * @param service The service to process.
-     * @return A link to this object.
+     * @return The service object.
      */
-    public Processor process(Service service);
+    public Object getService();
 }

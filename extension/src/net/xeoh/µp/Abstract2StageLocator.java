@@ -29,6 +29,8 @@ package net.xeoh.µp;
 
 import java.util.Collection;
 
+import net.xeoh.nexus.Service;
+
 /**
  * A 2StageLocator is a locator that in a first stage is able to list the 
  * plugin {@link Candidate} objects it would locate as an actual {@link Service}.
