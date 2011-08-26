@@ -45,6 +45,9 @@ public class DefaultNexus implements Nexus {
     /** All services we know */
     final ConcurrentLinkedQueue<Service> services = new ConcurrentLinkedQueue<Service>();
 
+    /** All service listeners we know */
+    final ConcurrentLinkedQueue<ServiceListener> serviceListeners = new ConcurrentLinkedQueue<ServiceListener>();
+    
     /** A quick look cache for commons requests */
     final Map<Class<?>, ConcurrentLinkedQueue<Service>> cache = new ConcurrentHashMap<Class<?>, ConcurrentLinkedQueue<Service>>();
 
@@ -107,6 +110,12 @@ public class DefaultNexus implements Nexus {
      */
     public Nexus register(Service service) {
         this.services.add(service);
+        
+        // Inform service listeners
+        for (ServiceListener listener : this.serviceListeners) {
+            listener.serviceRegistered(service);
+        }
+        
         return this;
     }
 
@@ -130,6 +139,11 @@ public class DefaultNexus implements Nexus {
                     iterator.remove();
                 }
             }
+        }
+        
+        // Inform service listeners
+        for (ServiceListener listener : this.serviceListeners) {
+            listener.serviceDeregistered(service);
         }
         
         return this;
@@ -201,4 +215,22 @@ public class DefaultNexus implements Nexus {
         return (T) result.getService();
     }
 
+    
+    /* (non-Javadoc)
+     * @see net.xeoh.nexus.Nexus#addServiceListener(net.xeoh.nexus.ServiceListener)
+     */
+    @Override
+    public Nexus addServiceListener(ServiceListener serviceListener) {
+        this.serviceListeners.add(serviceListener);
+        return this;
+    }
+
+    /* (non-Javadoc)
+     * @see net.xeoh.nexus.Nexus#removeServiceListener(net.xeoh.nexus.ServiceListener)
+     */
+    @Override
+    public Nexus removeServiceListener(ServiceListener serviceListener) {
+        this.serviceListeners.remove(serviceListener);
+        return this;
+    }
 }

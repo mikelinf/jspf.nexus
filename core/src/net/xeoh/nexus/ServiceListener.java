@@ -1,5 +1,5 @@
 /*
- * InternalService.java
+ * ServiceListener.java
  * 
  * Copyright (c) 2011, Ralf Biedert, DFKI. All rights reserved.
  * 
@@ -27,37 +27,26 @@
  */
 package net.xeoh.nexus;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-
 /**
- * Reflects an already running and instantiated service object. 
+ * Called when there are new messages at the {@link Nexus}.
  * 
  * @author Ralf Biedert
- * @param <T> The type of the service.
  * @since 1.0
  */
-public class InternalService<T> extends AbstractService<T> {
+public interface ServiceListener {
     /**
-     * Instantiates an InternalService object.
-     * 
-     * @param object The actual object you want to register as a service.
-     */
-    public InternalService(T object) {
-        super(object);
-    }
-
-    /**
-     * Creates an internal service collection consisting of the given service object.
+     * Called when a new service is registered.
      * 
      * @since 1.0
-     * @param service The service to wrap.
-     * @return A collection with one service object.
+     * @param service The service that is being registered.
      */
-    public static Collection<? extends Service> wrap(Object service) {
-        final ArrayList<Service> list = new ArrayList<Service>(1);
-        list.add(new InternalService<Object>(service));
-        return list;
-    }
+    public void serviceRegistered(Service service);
+    
+    /**
+     * Called when an existing service is being removed.
+     * 
+     * @since 1.0
+     * @param service The service that was removed.
+     */
+    public void serviceDeregistered(Service service);
 }

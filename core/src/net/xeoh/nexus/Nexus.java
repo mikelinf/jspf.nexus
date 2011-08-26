@@ -84,4 +84,24 @@ public interface Nexus {
      * @return Returns a collection with all known services.
      */
     public Collection<Service> list();
+    
+    
+    /**
+     * Adds a service listener.
+     * 
+     * @param serviceListener The service listener to add.
+     * @since 1.0
+     * @return Return this nexus.
+     */
+    public Nexus addServiceListener(ServiceListener serviceListener);
+
+
+    /**
+     * Removes a service listener.
+     * 
+     * @since 1.0
+     * @param serviceListener The listener to remove.
+     * @return This nexus.
+     */
+    public Nexus removeServiceListener(ServiceListener serviceListener);
 }

@@ -1,5 +1,5 @@
 /*
- * InternalService.java
+ * ClassPathFolderLocator.java
  * 
  * Copyright (c) 2011, Ralf Biedert, DFKI. All rights reserved.
  * 
@@ -27,37 +27,46 @@
  */
 package net.xeoh.nexus;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
-
 /**
- * Reflects an already running and instantiated service object. 
- * 
  * @author Ralf Biedert
- * @param <T> The type of the service.
  * @since 1.0
+ * 
  */
-public class InternalService<T> extends AbstractService<T> {
-    /**
-     * Instantiates an InternalService object.
+public class ClassPathFolderLocator extends Abstract2StageLocator {
+
+    /*
+     * (non-Javadoc)
      * 
-     * @param object The actual object you want to register as a service.
+     * @see net.xeoh.nexus.Abstract2StageLocator#candidates()
      */
-    public InternalService(T object) {
-        super(object);
+    @Override
+    public Collection<Candidate> candidates() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
-    /**
-     * Creates an internal service collection consisting of the given service object.
+    /*
+     * (non-Javadoc)
      * 
-     * @since 1.0
-     * @param service The service to wrap.
-     * @return A collection with one service object.
+     * @see net.xeoh.nexus.Abstract2StageLocator#locate(java.util.Collection)
      */
-    public static Collection<? extends Service> wrap(Object service) {
-        final ArrayList<Service> list = new ArrayList<Service>(1);
-        list.add(new InternalService<Object>(service));
-        return list;
+    @Override
+    public Collection<Service> locate(Collection<Candidate> candidates) {
+        // TODO Auto-generated method stub
+        return null;
     }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see net.xeoh.nexus.AbstractLocator#locate()
+     */
+    @Override
+    public Collection<Service> locate() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }
