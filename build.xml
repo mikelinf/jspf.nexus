@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+
+<!-- General project description -->
+<project name="nexus" default="all">
+    
+    <!-- Define different global variables -->
+    <property name="prefix" value="nexus"/>
+    <property name="version" value="1.0.0"/>
+    
+    <tstamp/>
+
+	<!-- Define different roots -->
+    <property name="build.root" value="ant.build/"/>
+    <property name="distribution.root" value="dist/"/>
+    
+    
+    <!-- Clear everything up -->
+    <target name="clean" description="Remove all previous build files">
+        <delete dir="${build.root}"/>
+        <delete dir="${distribution.root}"/>
+        <delete dir="documentation/api"/>
+        <mkdir dir="documentation/api"/>
+    </target>
+    
+    
+    <!-- Build JSPF -->
+    <target name="compile" description="Compile JSPF Nexus" depends="clean">
+        <!-- Create folders -->    	
+        <mkdir dir="${build.root}/jspf.nexus"/>
+        <mkdir dir="${build.root}/jspf.extension/"/>
+
+        <!-- Make JRE core -->
+        <javac srcdir="core/src" destdir="${build.root}/jspf.nexus" source="1.6" target="1.6" />
+        <javac srcdir="extension/src" destdir="${build.root}/jspf.extension" source="1.6" target="1.6" classpath="${build.root}/jspf.nexus"/>
+    </target>
+
+	
+    <!-- Pack JSPF -->
+    <target name="pack" description="Pack JSPF">
+        <!-- Create output folder -->
+        <mkdir dir="${distribution.root}/"/>
+
+        
+        <!-- Rejar everything -->
+        <jar destfile="${distribution.root}/${prefix}-${version}.jar" basedir="${build.root}/jspf.nexus"/>
+        <jar destfile="${distribution.root}/${prefix}.extension-${version}.jar" basedir="${build.root}/jspf.extension"/>
+    </target>
+
+
+    <!-- Pack plugins -->
+    <target name="all" depends="compile, pack"/>
+</project>

@@ -75,17 +75,22 @@ public class DefaultNexus implements Nexus {
      * 
      * @since 1.0
      * @param queue The queue to search in.
+     * @param service The service to search (optional). When null, each service is considered.
      * @param options The options to match. 
      * @return
      */
-    private static Service findService(ConcurrentLinkedQueue<Service> queue, Get... options) {
+    private static Service findService(ConcurrentLinkedQueue<Service> queue, Class<?> service, Get... options) {
         // If we have no options, just return some element of the queue...
-        if(options == null || options.length == 0) return queue.peek();
+        if(service == null && (options == null || options.length == 0)) return queue.peek();
         
         
         // Now deal with the options ...
         for (Service s : queue) {
+            // Skip all services which cannot be assigned to the requested service.
+            if(service != null && !service.isAssignableFrom(s.getService().getClass())) continue;
+            
             // TODO
+            
             return s;
         }
 
@@ -177,7 +182,7 @@ public class DefaultNexus implements Nexus {
     @Override
     public <T> T get(Class<T> service, Get... options) {
         final ConcurrentLinkedQueue<Service> queue = queueFor(service);
-        final Service selected = findService(queue, options);
+        final Service selected = findService(queue, null, options);
 
         
         // When we have a match, return the candidate. 
@@ -185,7 +190,7 @@ public class DefaultNexus implements Nexus {
         
         
         // When we have no match, we process the main queue and update this cache ...
-        final Service result = findService(this.services, options);
+        final Service result = findService(this.services, service, options);
         if(result == null) return null;
         
         // FIXME: In some rare cases services might be added two times to the cache when
