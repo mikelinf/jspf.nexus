@@ -29,7 +29,7 @@ package net.xeoh.nexus;
 
 import java.util.Collection;
 
-import net.xeoh.nexus.options.GetAll;
+import net.xeoh.nexus.options.Option;
 
 /**
  * A Nexus manages various services and provides implementations for
@@ -39,10 +39,6 @@ import net.xeoh.nexus.options.GetAll;
  * @since 1.0
  */
 public interface Nexus {
-    /** Options for get() */
-    public static abstract class Get {
-        public static final GetAll ALL = new GetAll();
-    }
 
     /**
      * Registers the collection of {@link Service} objects to this nexus. When this method 
@@ -74,7 +70,7 @@ public interface Nexus {
      * @param options A number of optional arguments to specify what exactly you want.
      * @return The requested object or null if nothing suitable was found.
      */
-    public <T> T get(Class<T> service, Get... options);
+    public <T> T get(Class<T> service, Option... options);
 
     /**
      * Returns all implementors for a given class. If you pass an interface all services 
@@ -86,7 +82,7 @@ public interface Nexus {
      * @param options A number of optional arguments to specify what exactly you want.
      * @return The list with requested items or an empty one if nothing suitable was found.
      */
-    public <T> Collection<T> getAll(Class<T> service, Get... options);
+    public <T> Collection<T> getAll(Class<T> service, Option... options);
 
     
     /**

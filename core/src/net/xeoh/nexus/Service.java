@@ -27,6 +27,9 @@
  */
 package net.xeoh.nexus;
 
+import net.xeoh.nexus.states.StateManager;
+
+
 
 /**
  * An object implementing the service interface provides a service object 
@@ -43,4 +46,14 @@ public interface Service {
      * @return The service object.
      */
     public Object getService();
+
+    
+    /**
+     * Returns the state manager for this service that contians additional state 
+     * information.
+     * 
+     * @since 1.0
+     * @return The state manager.
+     */
+    public StateManager getState();
 }

@@ -1,5 +1,5 @@
 /*
- * GetAll.java
+ * StateManager.java
  * 
  * Copyright (c) 2011, Ralf Biedert, DFKI. All rights reserved.
  * 
@@ -25,15 +25,46 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-package net.xeoh.nexus.options;
+package net.xeoh.nexus.states;
 
-import net.xeoh.nexus.Nexus.Get;
+import java.util.Collection;
+import java.util.LinkedList;
 
 /**
+ * Manages the states of a service.
+ * 
  * @author Ralf Biedert
  * @since 1.0
- *
  */
-public class GetAll extends Get {
+public class StateManager {
+    /** All our states */
+    final Collection<State> states = new LinkedList<State>();
+    
+    
+    /**
+     * Returns all active states.
+     * 
+     * @since 1.0
+     * @return All states
+     */
+    public Collection<State> getStates() {
+        return this.states;
+    }
 
+    
+    /**
+     * @since 1.0
+     * @param state
+     */
+    public void addState(State state) {
+        this.states.add(state);
+    }
+    
+    /**
+     * @since 1.0
+     * @param state
+     */
+    public void removeState(State state) {
+        this.states.remove(state);
+    }
 }

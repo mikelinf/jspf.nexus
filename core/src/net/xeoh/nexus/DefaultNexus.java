@@ -35,6 +35,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import net.xeoh.nexus.options.Option;
+import net.xeoh.nexus.states.State;
+
 /**
  * A default implementation of the {@link Nexus} interface. Unless you have specific needs,
  * use this class.
@@ -83,8 +86,18 @@ public class DefaultNexus implements Nexus {
      * @param options The optional conditions.
      * @return True if it does, false if not.
      */
-    private static boolean satisfiesCondition(Service service, Class<?> request, Get... options) {
-        return !(request != null && !request.isAssignableFrom(service.getService().getClass()));
+    private static boolean satisfiesCondition(Service service, Class<?> request, Option... options) {
+        // First the basic checks
+        if (request != null && !request.isAssignableFrom(service.getService().getClass())) return false;
+        
+        // Next see if the plugin was disabled.
+        final Collection<State> states = service.getState().getStates();
+        for (State state : states) {
+            // When a plugin is disabled we don't consider it.
+            if(state == State.DISABLED) return false;
+        }
+        
+        return true;
     }
     
     /**
@@ -96,7 +109,7 @@ public class DefaultNexus implements Nexus {
      * @param options The options to match. 
      * @return
      */
-    private static Service findService(ConcurrentLinkedQueue<Service> queue, Class<?> service, Get... options) {
+    private static Service findService(ConcurrentLinkedQueue<Service> queue, Class<?> service, Option... options) {
         // If we have no options, just return some element of the queue...
         if(service == null && (options == null || options.length == 0)) return queue.peek();
         
@@ -121,7 +134,7 @@ public class DefaultNexus implements Nexus {
      * @param options The options to match. 
      * @return
      */
-    private static Collection<Service> findServices(ConcurrentLinkedQueue<Service> queue, Class<?> service, Get... options) {
+    private static Collection<Service> findServices(ConcurrentLinkedQueue<Service> queue, Class<?> service, Option... options) {
         // If we have no options, just return some element of the queue...
         if(service == null && (options == null || options.length == 0)) return queue;
         
@@ -228,7 +241,7 @@ public class DefaultNexus implements Nexus {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T get(Class<T> service, Get... options) {
+    public <T> T get(Class<T> service, Option... options) {
         final ConcurrentLinkedQueue<Service> queue = queueFor(service);
         final Service selected = findService(queue, null, options);
 
@@ -274,7 +287,7 @@ public class DefaultNexus implements Nexus {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public <T> Collection<T> getAll(Class<T> service, Get... options) {
+    public <T> Collection<T> getAll(Class<T> service, Option... options) {
         // Select services right from the main queue 
         final Collection<Service> selected = findServices(this.services, service, options);
         final Collection<T> rval = new ArrayList<T>(selected.size());

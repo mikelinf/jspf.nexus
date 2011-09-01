@@ -1,5 +1,5 @@
 /*
- * AbstractService.java
+ * Dependency.java
  * 
  * Copyright (c) 2011, Ralf Biedert, DFKI. All rights reserved.
  * 
@@ -25,50 +25,60 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-package net.xeoh.nexus;
+package net.xeoh.nexus.states;
 
-import net.xeoh.nexus.states.StateManager;
+import java.util.Collection;
+import java.util.LinkedList;
+
+import net.xeoh.nexus.Service;
 
 /**
- * The abstract implementation for the {@link Service} interface.
+ * Reflects a dependency a service has.
  * 
  * @author Ralf Biedert
- * @param <T> The type of the service.
  * @since 1.0
- * @see InternalService
  */
-public abstract class AbstractService<T> implements Service {
-    /** The actual service object */
-    protected T object;
-
-    /** Our state manager */
-    protected StateManager stateManager = new StateManager();
+public abstract class Dependency extends State {
+    /**
+     * Creates a dependency check for a given service
+     * class type.
+     * 
+     * @since 1.0
+     * @param clazz The class required.
+     * @return A new class dependency.
+     */
+    public static Dependency CLASS(final Class<?> clazz) {
+        return new Dependency() {
+            @Override
+            protected boolean check(Service service) {
+                return false;
+            }
+        };
+    }
 
     /**
-     * Constructs an abstract service object with the given service.
+     * Returns all {@link Service} objects which would fulfill the dependency.
      * 
-     * @param object The object that provides service.
+     * @param toCheck The plugins to check.
+     * @since 1.0
+     * @return The services that satisfies the dependency, or an empty collection
+     * if none does.
      */
-    public AbstractService(T object) {
-        this.object = object;
+    public Collection<Service> resolve(Collection<Service> toCheck) {
+        final LinkedList<Service> rval = new LinkedList<Service>();
+        for (Service service : toCheck) {
+            if (check(service)) rval.add(service);
+        }
+        return rval;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * The dependency should return true if the service would fulfull the dependency, or
+     * false if not.
      * 
-     * @see net.jcores.kernel.Service#getService()
+     * @since 1.0
+     * @param service The service to test.
+     * @return True if it fullfills, false if not.
      */
-    public T getService() {
-        return this.object;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see net.xeoh.nexus.Service#getState()
-     */
-    @Override
-    public StateManager getState() {
-        return this.stateManager;
-    }
+    protected abstract boolean check(Service service);
 }

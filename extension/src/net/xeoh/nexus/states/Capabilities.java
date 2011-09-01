@@ -1,5 +1,5 @@
 /*
- * AbstractService.java
+ * Capabilities.java
  * 
  * Copyright (c) 2011, Ralf Biedert, DFKI. All rights reserved.
  * 
@@ -25,50 +25,19 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-package net.xeoh.nexus;
+package net.xeoh.nexus.states;
 
-import net.xeoh.nexus.states.StateManager;
+import java.util.Collection;
 
 /**
- * The abstract implementation for the {@link Service} interface.
+ * Reflects the "things" a service is capable of, e.g., mime types,
+ * file formats, languages, ...
  * 
  * @author Ralf Biedert
- * @param <T> The type of the service.
  * @since 1.0
- * @see InternalService
  */
-public abstract class AbstractService<T> implements Service {
-    /** The actual service object */
-    protected T object;
-
-    /** Our state manager */
-    protected StateManager stateManager = new StateManager();
-
-    /**
-     * Constructs an abstract service object with the given service.
-     * 
-     * @param object The object that provides service.
-     */
-    public AbstractService(T object) {
-        this.object = object;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see net.jcores.kernel.Service#getService()
-     */
-    public T getService() {
-        return this.object;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see net.xeoh.nexus.Service#getState()
-     */
-    @Override
-    public StateManager getState() {
-        return this.stateManager;
+public class Capabilities extends State {
+    public Collection<String> getCapabilities() {
+        return null;
     }
 }
