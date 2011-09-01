@@ -27,7 +27,9 @@
  */
 package net.xeoh.nexus;
 
-import static org.junit.Assert.fail;
+import java.util.Collection;
+
+import junit.framework.Assert;
 
 import org.junit.Test;
 
@@ -38,8 +40,29 @@ import org.junit.Test;
  * @since 1.0
  */
 public class DefaultNexusTest {
+    /** Basic functionality */
     @Test
-    public void test() {
-        fail("Not yet implemented");
+    public void testSimple() {
+        final DefaultNexus nexus = new DefaultNexus();
+        final Collection<? extends Service> services = InternalService.wrap(nexus);
+        
+        nexus.register(services);
+        Assert.assertEquals(nexus, nexus.get(Nexus.class));
+        Assert.assertEquals(1, nexus.getAll(Nexus.class).size());
+        Assert.assertEquals(nexus, nexus.getAll(Nexus.class).iterator().next());
+        
+        nexus.deregister(services);
+        Assert.assertNull(nexus.get(Nexus.class));
+        Assert.assertEquals(0, nexus.getAll(Nexus.class).size());
+        
+        nexus.register(services);
+        nexus.register(InternalService.wrap(new DefaultNexus()));
+        nexus.register(InternalService.wrap(new Object()));
+        Assert.assertEquals(2, nexus.getAll(Nexus.class).size());
+        Assert.assertEquals(3, nexus.getAll(Object.class).size());
+        Assert.assertEquals(3, nexus.list().size());
+        
+        nexus.deregister(nexus.list());
+        Assert.assertEquals(0, nexus.list().size());
     }
 }
