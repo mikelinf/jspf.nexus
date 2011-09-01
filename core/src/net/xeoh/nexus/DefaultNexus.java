@@ -30,6 +30,7 @@ package net.xeoh.nexus;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -74,6 +75,19 @@ public class DefaultNexus implements Nexus {
     }
     
     /**
+     * Checks if the given service satisfies the requested conditions. 
+     * 
+     * @since 1.0
+     * @param service The service to test.
+     * @param request The requested class.
+     * @param options The optional conditions.
+     * @return True if it does, false if not.
+     */
+    private static boolean satisfiesCondition(Service service, Class<?> request, Get... options) {
+        return !(request != null && !request.isAssignableFrom(service.getService().getClass()));
+    }
+    
+    /**
      * Tries to locate the service in the given queue. 
      * 
      * @since 1.0
@@ -89,11 +103,7 @@ public class DefaultNexus implements Nexus {
         
         // Now deal with the options ...
         for (Service s : queue) {
-            // Skip all services which cannot be assigned to the requested service.
-            if(service != null && !service.isAssignableFrom(s.getService().getClass())) continue;
-            
-            // TODO
-            
+            if (!satisfiesCondition(s, service, options)) continue;
             return s;
         }
 
@@ -101,6 +111,30 @@ public class DefaultNexus implements Nexus {
         return null;
     }
     
+    
+    /**
+     * Tries to locate all services which match the conditions. 
+     * 
+     * @since 1.0
+     * @param queue The queue to search in.
+     * @param service The service to search (optional). When null, each service is considered.
+     * @param options The options to match. 
+     * @return
+     */
+    private static Collection<Service> findServices(ConcurrentLinkedQueue<Service> queue, Class<?> service, Get... options) {
+        // If we have no options, just return some element of the queue...
+        if(service == null && (options == null || options.length == 0)) return queue;
+        
+        final Collection<Service> rval = new LinkedList<Service>();
+        
+        // Now deal with the options ...
+        for (Service s : queue) {
+            if (!satisfiesCondition(s, service, options)) continue;
+            rval.add(s);
+        }
+
+        return rval;
+    }
     
     
     /*
@@ -232,5 +266,25 @@ public class DefaultNexus implements Nexus {
     public Nexus removeServiceListener(ServiceListener serviceListener) {
         this.serviceListeners.remove(serviceListener);
         return this;
+    }
+
+    
+    /* (non-Javadoc)
+     * @see net.xeoh.nexus.Nexus#getAll(java.lang.Class, net.xeoh.nexus.Nexus.Get[])
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> Collection<T> getAll(Class<T> service, Get... options) {
+        // Select services right from the main queue 
+        final Collection<Service> selected = findServices(this.services, service, options);
+        final Collection<T> rval = new ArrayList<T>(selected.size());
+        
+
+        // Extract objects
+        for (Service s : selected) {
+            rval.add((T) s.getService());
+        }
+        
+        return rval;
     }
 }

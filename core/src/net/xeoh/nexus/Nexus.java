@@ -76,6 +76,18 @@ public interface Nexus {
      */
     public <T> T get(Class<T> service, Get... options);
 
+    /**
+     * Returns all implementors for a given class. If you pass an interface all services 
+     * matching the class will be returned. If you pass an ordinary class, all instances of 
+     * this class are returned.
+     * 
+     * @since 1.0
+     * @param service The service to get.
+     * @param options A number of optional arguments to specify what exactly you want.
+     * @return The list with requested items or an empty one if nothing suitable was found.
+     */
+    public <T> Collection<T> getAll(Class<T> service, Get... options);
+
     
     /**
      * Lists all known services.  
