@@ -41,4 +41,26 @@ public interface Candidate {
      * @return The {@link Abstract2StageLocator} locator that can locate this candidate.
      */
     public Abstract2StageLocator getLocator();
+
+    
+    /**
+     * Returns the class name of this candidate. In contrast 
+     * to the method <code>getCandidateClass()</code> this method does not
+     * require the classes bytecode to be read and is much more environmentally 
+     * friendly. 
+     * 
+     * @return The class name of the candidate.
+     * @since 1.0
+     */
+    public String getCandidateClassName();
+    
+    
+    /**
+     * Returns the class of this candidate for inspection. In contrast to 
+     * <code>getCandidateClassName</code> this method is heavyweight. 
+     * 
+     * @return The class of the candidate.
+     * @since 1.0
+     */
+    public Class<?> getCandidateClass();
 }

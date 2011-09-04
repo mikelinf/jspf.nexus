@@ -1,5 +1,5 @@
 /*
- * AnnotationProcessor.java
+ * Whitelist.java
  * 
  * Copyright (c) 2011, Ralf Biedert, DFKI. All rights reserved.
  * 
@@ -27,51 +27,46 @@
  */
 package net.xeoh.nexus;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 
 /**
- * Abstract base class of processors that deal with annotations.
+ * A whitelist lets only classes through whose name match the given
  * 
  * @author Ralf Biedert
  * @since 1.0
  */
-public abstract class AbstractAnnotationProcessor extends AbstractProcessor {
+public class Whitelist extends AbstractCandidateFilter {
 
     /**
-     * Returns all methods defined by this class and makes sure they are accessible.
+     * Constructs a new white list based on the set of filter rules.s
      * 
-     * @param clazz The class to consider. 
-     * @since 1.0
-     * @return A list of all methods we care fore.
+     * @param rules The rules to apply.
      */
-    public static Collection<Method> allMethods(Class<?> clazz) {
-        final Method[] methods = clazz.getMethods();
-        for (Method method : methods) {
-            method.setAccessible(true);
-        }
-        return Arrays.asList(methods);
+    public Whitelist(Collection<FilterRule> rules) {
+        super(rules);
     }
-    
-    /**
-     * Returns all methods that are tagged with a given annotation.
-     * 
-     * @since 1.0
-     * @param methods The methods to scan. 
-     * @param annotation The annotation to search for. 
-     * @return A collection of methods that implement the given annotation.
-     */
-    public static Collection<Method> findMethodsFor(Collection<Method> methods, Annotation annotation) {
-        final Collection<Method> rval = new LinkedList<Method>();
 
-        for (Method method : rval) {
-            //method.getA
+    /*
+     * (non-Javadoc)
+     * 
+     * @see net.xeoh.nexus.CandidateFilter#filter(java.util.Collection)
+     */
+    @Override
+    public Collection<Candidate> filter(Collection<Candidate> input) {
+        final Collection<Candidate> rval = new LinkedList<Candidate>();
+
+        for (Candidate candidate : input) {
+            // Check for each candidate if a rule matches, if yes, add the
+            // candidate and continue with the next one.
+            for (FilterRule rule : this.rules) {
+                if (rule.matches(candidate)) {
+                    rval.add(candidate);
+                    break;
+                }
+            }
         }
-        
-        
+
         return rval;
     }
 }

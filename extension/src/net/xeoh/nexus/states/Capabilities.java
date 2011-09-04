@@ -27,6 +27,7 @@
  */
 package net.xeoh.nexus.states;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -37,7 +38,27 @@ import java.util.Collection;
  * @since 1.0
  */
 public class Capabilities extends State {
+    /** All the capabilities we have */
+    final Collection<String> capabilitites = new ArrayList<String>();
+    
+    /**
+     * Creates a {@link Capabilities} object with the given capabilitites.
+     * 
+     * @param caps The capabilities.
+     */
+    public Capabilities(String ... caps) {
+        for (String string : caps) {
+            this.capabilitites.add(string);
+        }
+    }
+    
+    /**
+     * Returns all capabilities.
+     * 
+     * @since 1.0
+     * @return List with all known caps.
+     */
     public Collection<String> getCapabilities() {
-        return null;
+        return this.capabilitites;
     }
 }

@@ -1,5 +1,5 @@
 /*
- * AnnotationProcessor.java
+ * AbstractCandidateFilter.java
  * 
  * Copyright (c) 2011, Ralf Biedert, DFKI. All rights reserved.
  * 
@@ -27,51 +27,26 @@
  */
 package net.xeoh.nexus;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.LinkedList;
+
 
 /**
- * Abstract base class of processors that deal with annotations.
+ * The abstract class for candidate filters.
  * 
  * @author Ralf Biedert
  * @since 1.0
  */
-public abstract class AbstractAnnotationProcessor extends AbstractProcessor {
+public abstract class AbstractCandidateFilter implements CandidateFilter {
+    /** Our filter rules */
+    protected Collection<FilterRule> rules;
 
     /**
-     * Returns all methods defined by this class and makes sure they are accessible.
+     * Constructs an {@link AbstractCandidateFilter} with the given set of 
+     * {@link FilterRule}s.
      * 
-     * @param clazz The class to consider. 
-     * @since 1.0
-     * @return A list of all methods we care fore.
+     * @param rules The rules for this filter.
      */
-    public static Collection<Method> allMethods(Class<?> clazz) {
-        final Method[] methods = clazz.getMethods();
-        for (Method method : methods) {
-            method.setAccessible(true);
-        }
-        return Arrays.asList(methods);
-    }
-    
-    /**
-     * Returns all methods that are tagged with a given annotation.
-     * 
-     * @since 1.0
-     * @param methods The methods to scan. 
-     * @param annotation The annotation to search for. 
-     * @return A collection of methods that implement the given annotation.
-     */
-    public static Collection<Method> findMethodsFor(Collection<Method> methods, Annotation annotation) {
-        final Collection<Method> rval = new LinkedList<Method>();
-
-        for (Method method : rval) {
-            //method.getA
-        }
-        
-        
-        return rval;
+    public AbstractCandidateFilter(Collection<FilterRule> rules) {
+        this.rules = rules;
     }
 }

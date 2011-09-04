@@ -27,20 +27,21 @@
  */
 package net.xeoh.nexus;
 
+import java.util.Collection;
+
 /**
- * A class implementing Processor indicates that it can <i>process</i> services in 
- * some way. 
+ * A class implementing Processor <i>processes</i> services in
+ * some way, e.g., by injecting variables or spawning threads.
  * 
  * @author Ralf Biedert
  * @since 1.0
  */
 public interface Processor {
     /**
-     * Processes a given service in some way.  
+     * Processes a given service in some way.
      * 
      * @since 1.0
-     * @param service The service to process.
-     * @return A link to this object.
+     * @param service The services to process.
      */
-    public Processor process(Service service);
+    public void process(Collection<Service> service);
 }

@@ -53,16 +53,20 @@ public class StateManager {
 
     
     /**
+     * Adds the given state to our state information.
+     * 
      * @since 1.0
-     * @param state
+     * @param state The state to add.
      */
     public void addState(State state) {
         this.states.add(state);
     }
     
     /**
+     * Removes the given state from our state information.
+     * 
      * @since 1.0
-     * @param state
+     * @param state The state to remove.
      */
     public void removeState(State state) {
         this.states.remove(state);

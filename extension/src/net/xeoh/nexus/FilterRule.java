@@ -1,5 +1,5 @@
 /*
- * AnnotationProcessor.java
+ * FilterRule.java
  * 
  * Copyright (c) 2011, Ralf Biedert, DFKI. All rights reserved.
  * 
@@ -27,51 +27,36 @@
  */
 package net.xeoh.nexus;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.LinkedList;
-
 /**
- * Abstract base class of processors that deal with annotations.
+ * A filter rule specifies what comes through and what doesn't 
+ * when filtering {@link Candidate} objects.
  * 
  * @author Ralf Biedert
  * @since 1.0
  */
-public abstract class AbstractAnnotationProcessor extends AbstractProcessor {
-
+public abstract class FilterRule {
     /**
-     * Returns all methods defined by this class and makes sure they are accessible.
-     * 
-     * @param clazz The class to consider. 
+     * Contructs a filter that matches based on the given name.
+     *  
      * @since 1.0
-     * @return A list of all methods we care fore.
+     * @param name The name to test.
+     * @return A new filter rule.
      */
-    public static Collection<Method> allMethods(Class<?> clazz) {
-        final Method[] methods = clazz.getMethods();
-        for (Method method : methods) {
-            method.setAccessible(true);
-        }
-        return Arrays.asList(methods);
+    public static final FilterRule NAME(final String name) {
+        return new FilterRule() {
+            @Override
+            public boolean matches(Candidate candidate) {
+                return candidate.getCandidateClassName().contains(name);
+            }
+        };
     }
     
     /**
-     * Returns all methods that are tagged with a given annotation.
+     * Tests if a {@link Candidate} matches.
      * 
      * @since 1.0
-     * @param methods The methods to scan. 
-     * @param annotation The annotation to search for. 
-     * @return A collection of methods that implement the given annotation.
+     * @param candidate The candidate to test.
+     * @return True if the {@link Candidate} matches, false if not.
      */
-    public static Collection<Method> findMethodsFor(Collection<Method> methods, Annotation annotation) {
-        final Collection<Method> rval = new LinkedList<Method>();
-
-        for (Method method : rval) {
-            //method.getA
-        }
-        
-        
-        return rval;
-    }
+    public abstract boolean matches(Candidate candidate);
 }

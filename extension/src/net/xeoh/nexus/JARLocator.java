@@ -27,16 +27,52 @@
  */
 package net.xeoh.nexus;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.JarURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Enumeration;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 /**
+ * A JAR locator locates classes from a given file.
+ * 
  * @author Ralf Biedert
  * @since 1.0
- *
  */
 public class JARLocator extends Abstract2StageLocator {
+    /** The URL we process */
+    protected URL url;
 
-    /* (non-Javadoc)
+    /**
+     * Locates classes in the given JAR.
+     * 
+     * @param url Scan the given url.
+     */
+    public JARLocator(URL url) {
+        this.url = url;
+    }
+
+    /**
+     * Locates classes in the given JAR.
+     * 
+     * @param file Scan the given file.
+     */
+    public JARLocator(File file) {
+        try {
+            this.url = file.toURI().toURL();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see net.xeoh.nexus.Abstract2StageLocator#candidates()
      */
     @Override
@@ -45,7 +81,9 @@ public class JARLocator extends Abstract2StageLocator {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see net.xeoh.nexus.Abstract2StageLocator#locate(java.util.Collection)
      */
     @Override
@@ -54,7 +92,9 @@ public class JARLocator extends Abstract2StageLocator {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see net.xeoh.nexus.AbstractLocator#locate()
      */
     @Override
@@ -63,4 +103,46 @@ public class JARLocator extends Abstract2StageLocator {
         return null;
     }
 
+    /**
+     * Lists all top level class entries for the given URL pointing to a
+     * JAR file.
+     * 
+     * @param uri The URI to load the JAR from.
+     * @throws IOException When the JAR could not be accessed.
+     * @return A list with all class entries.
+     */
+    protected Collection<String> listAll(URL uri) throws IOException {
+        final Collection<String> rval = new ArrayList<String>();
+
+        // Use the native JAR access mechanism to get our classes.
+        try {
+            final JarURLConnection connection = (JarURLConnection) new URL("jar:" + uri + "!/").openConnection();
+            final JarFile jarFile = connection.getJarFile();
+            final Enumeration<JarEntry> entries = jarFile.entries();
+
+            // Get all avaliable entreis
+            while (entries.hasMoreElements()) {
+                final JarEntry entry = entries.nextElement();
+
+                // We only search for class file entries
+                if (entry.isDirectory()) continue;
+                if (!entry.getName().endsWith(".class")) continue;
+
+                // Convert the name
+                String name = entry.getName();
+                name = name.replaceAll("/", ".");
+
+                // Remove trailing .class
+                if (name.endsWith("class")) {
+                    name = name.substring(0, name.length() - 6);
+                }
+
+                rval.add(name);
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } 
+
+        return rval;
+    }
 }

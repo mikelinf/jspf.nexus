@@ -27,6 +27,8 @@
  */
 package net.xeoh.nexus;
 
+import java.util.Collection;
+
 /**
  * Abstract implementation of the {@link Processor} interface. 
  * 
@@ -40,5 +42,12 @@ public abstract class AbstractProcessor implements Processor {
      * @see net.jcores.kernel.Processor#process(net.jcores.kernel.Service)
      */
     @Override
-    public abstract Processor process(Service service);
+    public void process(Collection<Service> services) {
+        for (Service service: services) {
+            doProcess(service);
+        }
+    }
+    
+    
+    public abstract void doProcess(Service service);
 }

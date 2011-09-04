@@ -27,6 +27,15 @@
  */
 package sandbox;
 
+import java.io.File;
+import java.util.Collection;
+
+import net.xeoh.nexus.AbstractAnnotationProcessor;
+import net.xeoh.nexus.DefaultNexus;
+import net.xeoh.nexus.JARLocator;
+import net.xeoh.nexus.Nexus;
+import net.xeoh.nexus.Service;
+
 
 /**
  * @author Ralf Biedert
@@ -44,5 +53,38 @@ public class SimpleRealmExample {
         
         nexus.register(locator.locate());
         */
+
+        final Nexus nexus = new DefaultNexus();
+        final JARLocator locator = new JARLocator(new File("x.jar")); // do we need a realm here or just do that inside?
+        
+        
+        
+        // final DependencyProcessor dp = new DependencyProcessor(nexus);
+        final AbstractAnnotationProcessor jspfProcessor = (AbstractAnnotationProcessor) new Object(); {
+            final AbstractAnnotationProcessor disabler = (AbstractAnnotationProcessor) new Object();            
+            final AbstractAnnotationProcessor dependencies = (AbstractAnnotationProcessor) new Object();
+            final AbstractAnnotationProcessor capabilities = (AbstractAnnotationProcessor) new Object();
+            final AbstractAnnotationProcessor threads = (AbstractAnnotationProcessor) new Object();
+            final AbstractAnnotationProcessor timers = (AbstractAnnotationProcessor) new Object();
+            
+            disabler.process(newspan)
+            capabilities.process(newspan);
+            
+            // **ALL** services need to be processed (we might have inactive ones)
+            dependencies.process(nexus.list());
+            
+            // ...
+            
+            // Now when we have all dependencies, we need to add the plugin to the nexus 
+            nexus.add(newspawn)
+            
+            // next we can process the 
+            
+        }
+        
+        locator.whitelist(null);
+        
+        final Collection<Service> newspawn = locator.locate();
+        
     }
 }

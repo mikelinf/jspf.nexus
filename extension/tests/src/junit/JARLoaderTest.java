@@ -1,5 +1,5 @@
 /*
- * AnnotationProcessor.java
+ * JARLoaderTest.java
  * 
  * Copyright (c) 2011, Ralf Biedert, DFKI. All rights reserved.
  * 
@@ -25,53 +25,45 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-package net.xeoh.nexus;
+package junit;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.util.Arrays;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
+
+import net.xeoh.nexus.JARLocator;
+import net.xeoh.nexus.Service;
+
+import org.junit.Test;
 
 /**
- * Abstract base class of processors that deal with annotations.
- * 
  * @author Ralf Biedert
  * @since 1.0
  */
-public abstract class AbstractAnnotationProcessor extends AbstractProcessor {
-
-    /**
-     * Returns all methods defined by this class and makes sure they are accessible.
-     * 
-     * @param clazz The class to consider. 
-     * @since 1.0
-     * @return A list of all methods we care fore.
-     */
-    public static Collection<Method> allMethods(Class<?> clazz) {
-        final Method[] methods = clazz.getMethods();
-        for (Method method : methods) {
-            method.setAccessible(true);
-        }
-        return Arrays.asList(methods);
-    }
-    
-    /**
-     * Returns all methods that are tagged with a given annotation.
-     * 
-     * @since 1.0
-     * @param methods The methods to scan. 
-     * @param annotation The annotation to search for. 
-     * @return A collection of methods that implement the given annotation.
-     */
-    public static Collection<Method> findMethodsFor(Collection<Method> methods, Annotation annotation) {
-        final Collection<Method> rval = new LinkedList<Method>();
-
-        for (Method method : rval) {
-            //method.getA
+public class JARLoaderTest {
+    @Test
+    public void testFind() {
+        final Collection<String> result = new ArrayList<String>();
+        final JARLocator locator = new JARLocator(new File("extension/tests/data/coolplugin.jar")) {
+            /* (non-Javadoc)
+             * @see net.xeoh.nexus.JARLocator#locate()
+             */
+            @Override
+            public Collection<Service> locate() {
+                try {
+                    result.addAll(listAll(this.url));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return super.locate();
+            }
+        };
+        
+        Collection<Service> locate = locator.locate();
+        for (String string : result) {
+            System.out.println(string);
         }
         
-        
-        return rval;
     }
 }

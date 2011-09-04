@@ -37,11 +37,6 @@ import java.util.Collection;
  * @since 1.0
  */
 public abstract class Abstract2StageLocator extends AbstractLocator {
-    /** A whitelist of elements to consider */
-    protected Collection<String> whitelist;
-
-    /** A blacklist of elements not to consider */
-    protected Collection<String> blacklist;
 
     /**
      * Returns a list of {@link Candidate} objects this locator would
@@ -61,30 +56,4 @@ public abstract class Abstract2StageLocator extends AbstractLocator {
      * @return A list of located {@link Service} objects.
      */
     public abstract Collection<Service> locate(Collection<Candidate> candidates);
-
-    /**
-     * Sets the whitelist of classes to consider. If a whitelist is given, only the elements on the
-     * whitelist are being considered, regardless of the classes that might otherwise be found.
-     * If also a blacklist is given, only elements on the whitelist and not on the blacklist
-     * are loaded.
-     * 
-     * @since 1.0
-     * @param whitelist The whitelist to consider, a list of fully qualified class names.
-     */
-    @SuppressWarnings("hiding")    
-    public void whitelist(Collection<String> whitelist) {
-        this.whitelist = whitelist;
-    }
-
-    /**
-     * Sets the blacklist of classes not to consider. If a blacklist is given, the elements on the
-     * blacklist are not loaded, regardless of whether they are present on the whitelist or not.
-     * 
-     * @since 1.0
-     * @param blacklist The blacklist of classes not to load, a list of fully qualified class names.
-     */
-    @SuppressWarnings("hiding")
-    public void blacklist(Collection<String> blacklist) {
-        this.blacklist = blacklist;
-    }
 }

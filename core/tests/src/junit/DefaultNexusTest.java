@@ -1,5 +1,5 @@
 /*
- * AnnotationProcessor.java
+ * DefaultNexusTest.java
  * 
  * Copyright (c) 2011, Ralf Biedert, DFKI. All rights reserved.
  * 
@@ -25,53 +25,49 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-package net.xeoh.nexus;
+package junit;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.LinkedList;
+
+import junit.framework.Assert;
+
+import net.xeoh.nexus.DefaultNexus;
+import net.xeoh.nexus.InternalService;
+import net.xeoh.nexus.Nexus;
+import net.xeoh.nexus.Service;
+
+import org.junit.Test;
 
 /**
- * Abstract base class of processors that deal with annotations.
+ * Test Case.
  * 
  * @author Ralf Biedert
  * @since 1.0
  */
-public abstract class AbstractAnnotationProcessor extends AbstractProcessor {
-
-    /**
-     * Returns all methods defined by this class and makes sure they are accessible.
-     * 
-     * @param clazz The class to consider. 
-     * @since 1.0
-     * @return A list of all methods we care fore.
-     */
-    public static Collection<Method> allMethods(Class<?> clazz) {
-        final Method[] methods = clazz.getMethods();
-        for (Method method : methods) {
-            method.setAccessible(true);
-        }
-        return Arrays.asList(methods);
-    }
-    
-    /**
-     * Returns all methods that are tagged with a given annotation.
-     * 
-     * @since 1.0
-     * @param methods The methods to scan. 
-     * @param annotation The annotation to search for. 
-     * @return A collection of methods that implement the given annotation.
-     */
-    public static Collection<Method> findMethodsFor(Collection<Method> methods, Annotation annotation) {
-        final Collection<Method> rval = new LinkedList<Method>();
-
-        for (Method method : rval) {
-            //method.getA
-        }
+public class DefaultNexusTest {
+    /** Basic functionality */
+    @Test
+    public void testSimple() {
+        final DefaultNexus nexus = new DefaultNexus();
+        final Collection<? extends Service> services = InternalService.wrap(nexus);
         
+        nexus.register(services);
+        Assert.assertEquals(nexus, nexus.get(Nexus.class));
+        Assert.assertEquals(1, nexus.getAll(Nexus.class).size());
+        Assert.assertEquals(nexus, nexus.getAll(Nexus.class).iterator().next());
         
-        return rval;
+        nexus.deregister(services);
+        Assert.assertNull(nexus.get(Nexus.class));
+        Assert.assertEquals(0, nexus.getAll(Nexus.class).size());
+        
+        nexus.register(services);
+        nexus.register(InternalService.wrap(new DefaultNexus()));
+        nexus.register(InternalService.wrap(new Object()));
+        Assert.assertEquals(2, nexus.getAll(Nexus.class).size());
+        Assert.assertEquals(3, nexus.getAll(Object.class).size());
+        Assert.assertEquals(3, nexus.list().size());
+        
+        nexus.deregister(nexus.list());
+        Assert.assertEquals(0, nexus.list().size());
     }
 }

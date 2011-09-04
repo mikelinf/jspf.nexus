@@ -27,8 +27,12 @@
  */
 package net.xeoh.nexus.states;
 
+import net.xeoh.nexus.Nexus;
+
 /**
- * Base class for a service state.
+ * Base class for a service state. The objects within this class are considered 
+ * core states and are usually interpreted by all {@link Nexus} implementations we 
+ * ship. You can, however, define your own states and use them freely.    
  * 
  * @author Ralf Biedert
  * @since 1.0
