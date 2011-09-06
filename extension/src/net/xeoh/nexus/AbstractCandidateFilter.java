@@ -27,6 +27,7 @@
  */
 package net.xeoh.nexus;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 
@@ -48,5 +49,14 @@ public abstract class AbstractCandidateFilter implements CandidateFilter {
      */
     public AbstractCandidateFilter(Collection<FilterRule> rules) {
         this.rules = rules;
+    }
+    
+    /**
+     * Constructs an {@link AbstractCandidateFilter} with a single rule
+     *
+     * @param rules The rule for this filter.
+     */
+    public AbstractCandidateFilter(FilterRule rules) {
+        this(Arrays.asList(rules));
     }
 }

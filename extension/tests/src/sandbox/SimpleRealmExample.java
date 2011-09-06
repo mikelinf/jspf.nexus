@@ -30,8 +30,10 @@ package sandbox;
 import java.io.File;
 import java.util.Collection;
 
-import net.xeoh.nexus.AbstractAnnotationProcessor;
+import net.xeoh.nexus.Blacklist;
+import net.xeoh.nexus.Candidate;
 import net.xeoh.nexus.DefaultNexus;
+import net.xeoh.nexus.FilterRule;
 import net.xeoh.nexus.JARLocator;
 import net.xeoh.nexus.Nexus;
 import net.xeoh.nexus.Service;
@@ -56,8 +58,12 @@ public class SimpleRealmExample {
 
         final Nexus nexus = new DefaultNexus();
         final JARLocator locator = new JARLocator(new File("x.jar")); // do we need a realm here or just do that inside?
+        final Blacklist blacklist = new Blacklist(FilterRule.NAME("net.xeoh.x"));
         
+        final Collection<Candidate> candidates = blacklist.filter(locator.candidates());
+        final Collection<Service> locate = locator.locate(candidates);
         
+        /*
         
         // final DependencyProcessor dp = new DependencyProcessor(nexus);
         final AbstractAnnotationProcessor jspfProcessor = (AbstractAnnotationProcessor) new Object(); {
@@ -83,7 +89,7 @@ public class SimpleRealmExample {
         }
         
         locator.whitelist(null);
-        
+        */
         final Collection<Service> newspawn = locator.locate();
         
     }

@@ -39,13 +39,23 @@ import java.util.LinkedList;
 public class Whitelist extends AbstractCandidateFilter {
 
     /**
-     * Constructs a new white list based on the set of filter rules.s
+     * Constructs a new white list based on the set of filter rules.
      * 
      * @param rules The rules to apply.
      */
     public Whitelist(Collection<FilterRule> rules) {
         super(rules);
     }
+    
+    /**
+     * Constructs a new white list based on a single rule.
+     * 
+     * @param rule The rules to apply.
+     */
+    public Whitelist(FilterRule rule) {
+        super(rule);
+    }
+
 
     /*
      * (non-Javadoc)

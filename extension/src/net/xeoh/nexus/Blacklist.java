@@ -46,6 +46,16 @@ public class Blacklist extends AbstractCandidateFilter {
     public Blacklist(Collection<FilterRule> rules) {
         super(rules);
     }
+    
+    /**
+     * Constructs a new black list based on the set of filter rules.
+     * 
+     * @param rule The rules to apply.
+     */
+    public Blacklist(FilterRule rule) {
+        super(rule);
+    }
+    
 
     /*
      * (non-Javadoc)
