@@ -63,6 +63,7 @@ public class SimpleRealmExample {
         final Collection<Candidate> candidates = blacklist.filter(locator.candidates());
         final Collection<Service> locate = locator.locate(candidates);
         
+        
         /*
         
         // final DependencyProcessor dp = new DependencyProcessor(nexus);
@@ -76,8 +77,12 @@ public class SimpleRealmExample {
             disabler.process(newspan)
             capabilities.process(newspan);
             
-            // **ALL** services need to be processed (we might have inactive ones)
+            // **ALL** services need to be processed (we might have inactive ones) ... on the other hand, 
+            // the processor does not need to care for what's inside the nexus, just for what was passed to him
             dependencies.process(nexus.list());
+            
+            // thus:
+            dependencies.process(newspawn) // stores information
             
             // ...
             
