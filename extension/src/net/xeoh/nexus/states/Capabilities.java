@@ -44,9 +44,12 @@ public class Capabilities extends State {
     /**
      * Creates a {@link Capabilities} object with the given capabilitites.
      * 
+     * @param ownerID The ownerID of this state. 
      * @param caps The capabilities.
      */
-    public Capabilities(String ... caps) {
+    public Capabilities(String ownerID, String ... caps) {
+        super(ownerID);
+        
         for (String string : caps) {
             this.capabilitites.add(string);
         }

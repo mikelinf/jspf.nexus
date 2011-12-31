@@ -68,7 +68,7 @@ public abstract class AbstractService<T> implements Service {
      * @see net.xeoh.nexus.Service#getState()
      */
     @Override
-    public StateManager getState() {
+    public StateManager getStates() {
         return this.stateManager;
     }
 }

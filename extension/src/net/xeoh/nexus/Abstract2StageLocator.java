@@ -29,6 +29,12 @@ package net.xeoh.nexus;
 
 import java.util.Collection;
 
+import net.xeoh.nexus.options.Option;
+
+import org.codehaus.classworlds.ClassRealm;
+import org.codehaus.classworlds.ClassWorld;
+import org.codehaus.classworlds.DuplicateRealmException;
+
 /**
  * A 2StageLocator is a locator that in a first stage is able to list the
  * plugin {@link Candidate} objects it would locate as an actual {@link Service}.
@@ -37,10 +43,27 @@ import java.util.Collection;
  * @since 1.0
  */
 public abstract class Abstract2StageLocator extends AbstractLocator {
+    protected final static String DEFAULT_REALM = "realm:default";
+
+    /** Our own classworld object */
+    protected ClassWorld classWorld;
+
+    /** Our default realm */
+    protected ClassRealm realm;
+
+    /** */
+    protected Abstract2StageLocator(Option ... options) {
+        try {
+            this.classWorld = new ClassWorld();
+            this.realm = this.classWorld.newRealm(DEFAULT_REALM);
+        } catch (DuplicateRealmException e) {
+            //
+        }
+    }
 
     /**
      * Returns a list of {@link Candidate} objects this locator would
-     * locate as {@link Service} objects when <code>locate()</code> is 
+     * locate as {@link Service} objects when <code>locate()</code> is
      * being called.
      * 
      * @since 1.0

@@ -37,6 +37,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import net.xeoh.nexus.options.Option;
 import net.xeoh.nexus.states.State;
+import net.xeoh.nexus.states.StateDisabled;
 
 /**
  * A default implementation of the {@link Nexus} interface. Unless you have specific needs,
@@ -91,10 +92,10 @@ public class DefaultNexus implements Nexus {
         if (request != null && !request.isAssignableFrom(service.getService().getClass())) return false;
         
         // Next see if the plugin was disabled.
-        final Collection<State> states = service.getState().getStates();
+        final Collection<State> states = service.getStates().getStates();
         for (State state : states) {
             // When a plugin is disabled we don't consider it.
-            if(state == State.DISABLED) return false;
+            if(state instanceof StateDisabled) return false;
         }
         
         return true;

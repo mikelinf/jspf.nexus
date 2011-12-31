@@ -37,6 +37,7 @@ import net.xeoh.nexus.FilterRule;
 import net.xeoh.nexus.JARLocator;
 import net.xeoh.nexus.Nexus;
 import net.xeoh.nexus.Service;
+import net.xeoh.nexus.URILoader;
 
 
 /**
@@ -52,12 +53,11 @@ public class SimpleRealmExample {
         final Locator locator = new ClassPathFolderLocator("bin/", "myrealm");
         final Locator locator = new ScanningLocator("plugins/", "myrealm");
         
-        
         nexus.register(locator.locate());
         */
-
+        
         final Nexus nexus = new DefaultNexus();
-        final JARLocator locator = new JARLocator(new File("x.jar")); // do we need a realm here or just do that inside?
+        final URILoader locator = new JARLocator(new File("x.jar")); // do we need a realm here or just do that inside?
         final Blacklist blacklist = new Blacklist(FilterRule.NAME("net.xeoh.x"));
         
         final Collection<Candidate> candidates = blacklist.filter(locator.candidates());

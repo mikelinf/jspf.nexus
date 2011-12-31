@@ -34,6 +34,7 @@ import java.util.Collection;
 
 import net.xeoh.nexus.JARLocator;
 import net.xeoh.nexus.Service;
+import net.xeoh.nexus.URILoader;
 
 import org.junit.Test;
 
@@ -45,25 +46,27 @@ public class JARLoaderTest {
     @Test
     public void testFind() {
         final Collection<String> result = new ArrayList<String>();
-        final JARLocator locator = new JARLocator(new File("extension/tests/data/coolplugin.jar")) {
-            /* (non-Javadoc)
+        final URILoader locator = new JARLocator(new File("extension/tests/data/coolplugin.jar")) {
+            /*
+             * (non-Javadoc)
+             * 
              * @see net.xeoh.nexus.JARLocator#locate()
              */
             @Override
             public Collection<Service> locate() {
                 try {
-                    result.addAll(listAll(this.url));
+                    result.addAll(listAll(this.uri));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 return super.locate();
             }
         };
-        
+
         Collection<Service> locate = locator.locate();
         for (String string : result) {
             System.out.println(string);
         }
-        
+
     }
 }

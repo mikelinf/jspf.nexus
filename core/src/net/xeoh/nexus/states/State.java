@@ -30,17 +30,30 @@ package net.xeoh.nexus.states;
 import net.xeoh.nexus.Nexus;
 
 /**
- * Base class for a service state. The objects within this class are considered 
- * core states and are usually interpreted by all {@link Nexus} implementations we 
- * ship. You can, however, define your own states and use them freely.    
+ * Base class for a service state. The objects within this class are considered
+ * core states and are usually interpreted by all {@link Nexus} implementations we
+ * ship. You can, however, define your own states and use them freely.
  * 
  * @author Ralf Biedert
  * @since 1.0
  */
 public class State {
-    /** If the plugin is temporarily disabled and should be ignored by 
-     * <code>get*()</code>, <code>list()</code> will still return it. */
-    public final static State DISABLED = new State();
-    
-    protected State() {}
+    /** The default ownerID when none was specified */
+    public static final String DEFAULT_OWNERID = "Unknown";
+
+    /** The ownerID of the state, used to check who created it. */
+    private final String ownerID;
+
+    protected State(String ownerID) {
+        this.ownerID = ownerID == null ? DEFAULT_OWNERID : ownerID;
+    }
+
+    /**
+     * Returns the owner ID of this state.
+     * 
+     * @return the ownerID
+     */
+    public String getOwnerID() {
+        return this.ownerID;
+    }
 }

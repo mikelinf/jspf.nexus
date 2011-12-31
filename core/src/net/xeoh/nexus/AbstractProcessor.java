@@ -49,5 +49,11 @@ public abstract class AbstractProcessor implements Processor {
     }
     
     
+    /**
+     * Override this method to process a single service.
+     * 
+     * @since 1.0
+     * @param service The service to process.
+     */
     public abstract void doProcess(Service service);
 }

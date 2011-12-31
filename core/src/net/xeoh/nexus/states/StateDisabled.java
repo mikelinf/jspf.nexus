@@ -1,5 +1,5 @@
 /*
- * Service.java
+ * StateDisabled.java
  * 
  * Copyright (c) 2011, Ralf Biedert, DFKI. All rights reserved.
  * 
@@ -25,35 +25,22 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-package net.xeoh.nexus;
-
-import net.xeoh.nexus.states.StateManager;
-
-
+package net.xeoh.nexus.states;
 
 /**
- * An object implementing the service interface provides a service object 
- * which can then be used by a {@link Nexus} to resolve request.   
+ * Indicates if the plugin is temporarily disabled and should be ignored by <code>get*()</code>, <code>list()</code>
+ * willstill return it.
  * 
  * @author Ralf Biedert
  * @since 1.0
  */
-public interface Service {
+public class StateDisabled extends State {
     /**
-     * Returns the service this object provides. 
+     * Create a new disabled state.
      * 
-     * @since 1.0
-     * @return The service object.
+     * @param ownerID
      */
-    public Object getService();
-
-    
-    /**
-     * Returns the state manager for this service that contians additional state 
-     * information.
-     * 
-     * @since 1.0
-     * @return The state manager.
-     */
-    public StateManager getStates();
+    public StateDisabled(String ownerID) {
+        super(ownerID);
+    }
 }

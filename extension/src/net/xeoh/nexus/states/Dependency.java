@@ -39,16 +39,28 @@ import net.xeoh.nexus.Service;
  * @since 1.0
  */
 public abstract class Dependency extends State {
+    
+    /**
+     * Creates a new dependency.
+     * 
+     * @param ownerID
+     */
+    protected Dependency(String ownerID) {
+        super(ownerID);
+    }
+    
     /**
      * Creates a dependency check for a given service
      * class type.
+     * 
+     * @param ownerID 
      * 
      * @since 1.0
      * @param clazz The class required.
      * @return A new class dependency.
      */
-    public static Dependency CLASS(final Class<?> clazz) {
-        return new Dependency() {
+    public static Dependency CLASS(String ownerID, final Class<?> clazz) {
+        return new Dependency(ownerID) {
             @Override
             protected boolean check(Service service) {
                 return false;

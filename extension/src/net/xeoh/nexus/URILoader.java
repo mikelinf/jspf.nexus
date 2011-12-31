@@ -1,5 +1,5 @@
 /*
- * Service.java
+ * URILoader.java
  * 
  * Copyright (c) 2011, Ralf Biedert, DFKI. All rights reserved.
  * 
@@ -27,33 +27,29 @@
  */
 package net.xeoh.nexus;
 
-import net.xeoh.nexus.states.StateManager;
+import java.net.URI;
 
-
+import net.xeoh.nexus.options.Option;
 
 /**
- * An object implementing the service interface provides a service object 
- * which can then be used by a {@link Nexus} to resolve request.   
- * 
  * @author Ralf Biedert
  * @since 1.0
+ *
  */
-public interface Service {
-    /**
-     * Returns the service this object provides. 
-     * 
-     * @since 1.0
-     * @return The service object.
-     */
-    public Object getService();
+public abstract class URILoader extends Abstract2StageLocator {
 
-    
+    /** The URL we process */
+    protected URI uri;
+ 
     /**
-     * Returns the state manager for this service that contians additional state 
-     * information.
+     * Locates classes in the given JAR.
      * 
-     * @since 1.0
-     * @return The state manager.
+     * @param uri Scan the given URI.
+     * @param options The options this locator supports.
      */
-    public StateManager getStates();
+    public URILoader(URI uri, Option... options) {
+        super(options);
+        
+        this.uri = uri;
+    }
 }

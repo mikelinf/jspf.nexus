@@ -31,6 +31,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.JarURLConnection;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,23 +39,23 @@ import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import net.xeoh.nexus.options.Option;
+
 /**
  * A JAR locator locates classes from a given file.
  * 
  * @author Ralf Biedert
  * @since 1.0
  */
-public class JARLocator extends Abstract2StageLocator {
-    /** The URL we process */
-    protected URL url;
-
+public class JARLocator extends URILoader {
     /**
      * Locates classes in the given JAR.
      * 
-     * @param url Scan the given url.
+     * @param uri Scan the given URI.
+     * @param options The options this locator supports.
      */
-    public JARLocator(URL url) {
-        this.url = url;
+    public JARLocator(URI uri, Option... options) {
+        super(uri, options);
     }
 
     /**
@@ -63,11 +64,7 @@ public class JARLocator extends Abstract2StageLocator {
      * @param file Scan the given file.
      */
     public JARLocator(File file) {
-        try {
-            this.url = file.toURI().toURL();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        this(file.toURI());
     }
 
     /*
@@ -111,7 +108,7 @@ public class JARLocator extends Abstract2StageLocator {
      * @throws IOException When the JAR could not be accessed.
      * @return A list with all class entries.
      */
-    protected Collection<String> listAll(URL uri) throws IOException {
+    protected Collection<String> listAll(URI uri) throws IOException {
         final Collection<String> rval = new ArrayList<String>();
 
         // Use the native JAR access mechanism to get our classes.
@@ -141,7 +138,7 @@ public class JARLocator extends Abstract2StageLocator {
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
-        } 
+        }
 
         return rval;
     }

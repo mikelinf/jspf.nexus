@@ -27,6 +27,7 @@
  */
 package net.xeoh.nexus.states;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -39,8 +40,7 @@ import java.util.LinkedList;
 public class StateManager {
     /** All our states */
     final Collection<State> states = new LinkedList<State>();
-    
-    
+
     /**
      * Returns all active states.
      * 
@@ -51,7 +51,24 @@ public class StateManager {
         return this.states;
     }
 
-    
+    /**
+     * Returns all active states which have been created by <code>ownerID</code>.
+     * 
+     * @param ownerID The ownerID for which to search.
+     * 
+     * @since 1.0
+     * @return All states
+     */
+    public Collection<State> getStatesBy(String ownerID) {
+        final Collection<State> rval = new ArrayList<State>();
+        
+        for (State state : this.states) {
+            if (state.getOwnerID().equals(ownerID)) rval.add(state);
+        }
+
+        return this.states;
+    }
+
     /**
      * Adds the given state to our state information.
      * 
@@ -61,7 +78,7 @@ public class StateManager {
     public void addState(State state) {
         this.states.add(state);
     }
-    
+
     /**
      * Removes the given state from our state information.
      * 
