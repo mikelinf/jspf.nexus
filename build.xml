@@ -31,7 +31,9 @@
 
         <!-- Make JRE core -->
         <javac srcdir="core/src" destdir="${build.root}/jspf.nexus" source="1.6" target="1.6" />
-        <javac srcdir="extension/src" destdir="${build.root}/jspf.extension" source="1.6" target="1.6" classpath="${build.root}/jspf.nexus"/>
+        <javac srcdir="extension/src" destdir="${build.root}/jspf.extension" source="1.6" target="1.6" classpath="${build.root}/jspf.nexus">
+            <classpath path="extension/dependencies/classworlds-1.0.mod.jar"/>
+        </javac>
     </target>
 
 	
